@@ -1,11 +1,13 @@
 # Colonist Test Game
 Implement a ping pong game according to the template. 
 
+- You're not expected to know everything in here, but you're expected to figure them out. 
+
 ## Before Starting
-- Import repository: https://prnt.sc/vs0ygy
-- All work should be done in your own private repository now.
+- Fork repository
+- All work should be done in your own repository now.
 - Create a new branch and work on that branch.
-- Do not push commit or push anything to this repo (colonist/test)!
+- Do not push commit or push anything to this repo (colonist/colonist-test)!
 
 ## Template
 Template has `onInit` and `onUpdate`. Please design your ping-pong game with only those two functions. Do not modify app.js.
