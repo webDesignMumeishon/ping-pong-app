@@ -8,6 +8,7 @@ Implement a ping pong game according to the template.
 - All work should be done in your own repository now.
 - Create a new branch and work on that branch.
 - Do not push commit or push anything to this repo (colonist/colonist-test)!
+- [Read & apply the best practices](https://medium.com/@hugooodias/the-anatomy-of-a-perfect-pull-request-567382bb6067).
 
 ## Template
 Template has `onInit` and `onUpdate`. Please design your ping-pong game with only those two functions. Do not modify app.js.
@@ -37,7 +38,6 @@ Please start server with ```node index.js```.
 ## After Finishing
 - On your repository create a PR merging your feature branch into your master branch.
 - Add a very good description on what it is, make sure to include a very short video showcasing what you've made. 
-- [Read & apply the best practices](https://medium.com/@hugooodias/the-anatomy-of-a-perfect-pull-request-567382bb6067).
 - Invite collaborators `demiculus` & `goktugyil` to the repo.
 - Request reviews for the PR from `demiculus` & `goktugyil`.
 
