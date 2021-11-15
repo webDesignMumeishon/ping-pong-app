@@ -4,42 +4,83 @@
 	<title>Ping Pong Game</title>
 </head>
 <body>
-	<canvas id="canvas" width="800" height="400"></canvas>
+	<canvas id="canvas" width="800" height="400" style="border: solid black;"></canvas>
 	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/playersCommands.js"></script>
+	<script type="text/javascript" src="js/startBall.js"></script>
 	<script type="text/javascript">
 		//Sample functions, remove these functions and design ping-pong game with onInit and onUpdate.
 
 		app.onInit = function(){
+
 			this.nodes.push({
 				id : 'red-box',
-				x  : 100,
-				y  : 0,
+				x  : startBallPositionAxisX(),
+				y  : 50,
 				width  : 100,
 				height : 100,
 				color  : 'red',
-				direction : 0
+				direction : startBallDirection()
 			});
 
 			this.nodes.push({
-				id : 'black-box',
-				x  : 50,
+				id : 'player-one',
+				x  : 0,
 				y  : 0,
-				width  : 150,
+				width  : 50,
 				height : 150,
 				color  : 'black'
 			});
+
+			this.nodes.push({
+				id : 'player-two',
+				x  : 750,
+				y  : 0,
+				width  : 50,
+				height : 150,
+				color  : 'blue'
+			});
+
+			playersMoves = playersMoves.bind(this)
+			document.addEventListener('keydown', playersMoves)
 		};
-
+		
 		app.onUpdate = function(time){
-			this.getNode('black-box').y++;
 
-			if(Math.cos(this.timestamp / 100) > 0){
-				this.getNode('red-box').direction = -1;
-			}else{
-				this.getNode('red-box').direction = 1;
+			if(this.getNode("player-one").y < 0){
+				this.getNode("player-one").y = 0
 			}
 
-			this.getNode('red-box').x+=this.getNode('red-box').direction;
+			if(this.getNode("player-one").y >= 250){
+				this.getNode("player-one").y = 250
+			}
+
+			if(this.getNode("player-two").y < 0){
+				this.getNode("player-two").y = 0
+			}
+
+			if(this.getNode("player-two").y >= 250){
+				this.getNode("player-two").y = 250
+			}
+
+			/*Ball bouncing logic*/
+
+			if(Math.cos(this.timestamp / 100) > 0){
+				if(this.getNode('red-box').x > 600){
+					this.getNode('red-box').direction = -5;
+				}
+
+			}else{
+				if(this.getNode('red-box').x < 600){
+					this.getNode('red-box').direction = 5;
+					// console.log("rigth", this.getNode('red-box').x);
+				}
+			}
+
+			this.getNode('red-box').x += this.getNode('red-box').direction;
+			// this.getNode('red-box').y += this.getNode('red-box').direction;
+
+			// console.log("Running");
 		};
 	</script>
 </body>
