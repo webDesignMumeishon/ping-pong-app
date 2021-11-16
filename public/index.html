@@ -23,8 +23,8 @@
 				id : 'red-box',
 				x  : startBallPositionAxisX(canvasTotalWidth),
 				y  : startBallPositionAxisY(canvasTotalHeight),
-				width  : 100,
-				height : 100,
+				width  : 50,
+				height : 50,
 				color  : 'red',
 				directionX : 3,
 				directionY : -3
@@ -76,8 +76,23 @@
 			
 			/*Detect collision between player and ball*/
 			let player = this.getNode('red-box').x < this.canvas.width / 2 
-			? collision(this.getNode('red-box'), this.getNode('player-one'))
-			: collision(this.getNode('red-box'), this.getNode('player-two'))
+			? this.getNode('player-one')
+			: this.getNode('player-two')
+
+			/*We change the direction based on where the ball hit the paddle*/
+			if(collision(this.getNode('red-box'), player)){
+
+				let collidePoint = (this.getNode('red-box').y - (player.y + player.height / 2)) / (player.height/2)
+				let angle = collidePoint * (Math.PI / 4)
+
+				let direction = (this.getNode('red-box').x < this.canvas.width / 2 ) ? 1 : -1
+
+				console.log(direction);
+
+				this.getNode('red-box').directionX = direction * 5 * Math.cos(angle)
+				this.getNode('red-box').directionY = direction * 5 * Math.sin(angle)
+				
+			}
 
 			/*Re-directing after hitting a bounce*/
 			if(this.getNode('red-box').y + this.getNode('red-box').height > this.canvas.height || this.getNode('red-box').y < 0){
