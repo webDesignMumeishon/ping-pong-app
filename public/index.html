@@ -12,94 +12,106 @@
 	<script type="text/javascript">
 		//Sample functions, remove these functions and design ping-pong game with onInit and onUpdate.
 
+		/*Values*/
+		const paddleInitialPosition = this.canvas.height/2 - 150/2
+		
 		app.onInit = function(){
-
-			/*Values*/
-			const canvasTotalWidth = this.canvas.width
-			const canvasTotalHeight = this.canvas.height
-			const paddleInitialPosition = this.canvas.height/2 - 150/2
-
+			
 			this.nodes.push({
 				id : 'red-box',
-				x  : startBallPositionAxisX(canvasTotalWidth),
-				y  : startBallPositionAxisY(canvasTotalHeight),
 				width  : 50,
 				height : 50,
 				color  : 'red',
-				directionX : 3,
-				directionY : -3
 			});
-
+			startBallPosition(this)
+			
 			this.nodes.push({
 				id : 'player-one',
 				x  : 0,
 				y  : paddleInitialPosition,
 				width  : 50,
 				height : 150,
-				color  : 'black'
+				color  : 'black',
+				score: 0
 			});
-
+			
 			this.nodes.push({
 				id : 'player-two',
-				x  : canvasTotalWidth - 50,
+				x  : 800 - 50,
 				y  : paddleInitialPosition,
 				width  : 50,
 				height : 150,
-				color  : 'blue'
+				color  : 'blue',
+				score: 0
 			});
-
+			
 			playersMoves = playersMoves.bind(this)
 			document.addEventListener('keydown', playersMoves)
 		};
 		
 		app.onUpdate = function(time){
+			let playerOne = this.getNode("player-one")
+			let playerTwo = this.getNode("player-two")
+			let ball = this.getNode('red-box')
 
-			if(this.getNode("player-one").y < 0){
-				this.getNode("player-one").y = 0
+
+			if(playerOne.y < 0){
+				playerOne.y = 0
 			}
 
-			if(this.getNode("player-one").y >= 250){
-				this.getNode("player-one").y = 250
+			if(playerOne.y >= 250){
+				playerOne.y = 250
 			}
 
-			if(this.getNode("player-two").y < 0){
-				this.getNode("player-two").y = 0
+			if(playerTwo.y < 0){
+				playerTwo.y = 0
 			}
 
-			if(this.getNode("player-two").y >= 250){
-				this.getNode("player-two").y = 250
+			if(playerTwo.y >= 250){
+				playerTwo.y = 250
 			}
 
 			/*Ball bouncing logic*/
-			this.getNode('red-box').x += this.getNode('red-box').directionX;
-			this.getNode('red-box').y += this.getNode('red-box').directionY;
+			ball.x += ball.directionX;
+			ball.y += ball.directionY;
 			
 			/*Detect collision between player and ball*/
-			let player = this.getNode('red-box').x < this.canvas.width / 2 
-			? this.getNode('player-one')
-			: this.getNode('player-two')
+			let player = ball.x < this.canvas.width / 2 
+			? playerOne
+			: playerTwo
 
 			/*We change the direction based on where the ball hit the paddle*/
-			if(collision(this.getNode('red-box'), player)){
-
-				let collidePoint = (this.getNode('red-box').y - (player.y + player.height / 2)) / (player.height/2)
+			if(collision(ball, player)){
+				let collidePoint = (ball.y - (player.y + player.height / 2)) / (player.height/2)
 				let angle = collidePoint * (Math.PI / 4)
 
-				let direction = (this.getNode('red-box').x < this.canvas.width / 2 ) ? 1 : -1
+				let direction = (ball.x < this.canvas.width / 2 ) ? 1 : -1
 
-				console.log(direction);
-
-				this.getNode('red-box').directionX = direction * 5 * Math.cos(angle)
-				this.getNode('red-box').directionY = direction * 5 * Math.sin(angle)
-				
+				ball.directionX = direction * 10 * Math.cos(angle)
+				ball.directionY = direction * 10 * Math.sin(angle)
 			}
+
 
 			/*Re-directing after hitting a bounce*/
-			if(this.getNode('red-box').y + this.getNode('red-box').height > this.canvas.height || this.getNode('red-box').y < 0){
-				this.getNode('red-box').directionY = -this.getNode('red-box').directionY;
+			if(ball.y + ball.height > this.canvas.height || ball.y < 0){
+				ball.directionY = -ball.directionY;
 			}
-			if(this.getNode('red-box').x + this.getNode('red-box').width > this.canvas.width || this.getNode('red-box').x < 0){
-				this.getNode('red-box').directionX = -this.getNode('red-box').directionX;
+
+			if(ball.x < 0){
+				// Get current player
+				let player = this.getNode('player-two')
+				// Update score player two and reset game
+				player.score += 1
+				console.log("PLAYER TWO WON | SCORE: ", player.score);
+				startBallPosition(this)
+			}
+			else if(ball.x + ball.width > this.canvas.width){
+				// Get current player
+				let player = this.getNode('player-one')
+				// Update score player one and reset game
+				player.score += 1
+				console.log("PLAYER ONE WON | SCORE: ", player.score);
+				startBallPosition(this)
 			}
 		};
 	</script>
