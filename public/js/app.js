@@ -7,6 +7,9 @@ var app = {
 	width   : 800,
 	height  : 400,
 
+	//id for stopping the animation
+	id : undefined,
+
 	//nodes
 	nodes   : [],
 
@@ -18,22 +21,20 @@ var app = {
 	init : function(){
 		this.canvas  = document.getElementById('canvas');
 		this.context = this.canvas.getContext('2d');
-
 		this.render();
 		this.onInit();
+
 	},
 	render : function(){
 		this.clear();
 		this.update();
-
-		window.requestAnimationFrame(this.render.bind(this));
+		this.id = window.requestAnimationFrame(this.render.bind(this));
 	},
 	clear  : function(){
 		this.context.clearRect(0, 0, this.width, this.height);
 	},
 	update : function(){
 	    var dt = Date.now() - this.lastUpdate;
-
 		this.onUpdate(dt);
 
 		for(var index in this.nodes){
@@ -54,7 +55,6 @@ var app = {
 				return node;
 			}
 		}
-
 		return { x : null, y : null, width : null, height : null };
 	},
 

@@ -1,4 +1,4 @@
-const min = -10
+const min = 5
 
 function startBallPosition(){
     this.getNode('red-box').x = this.canvas.width / 2
