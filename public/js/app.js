@@ -5,7 +5,7 @@ var app = {
 
 	//resizing
 	width   : 1300,
-	height  : 400,
+	height  : 500,
 
 	//id for stopping the animation
 	id : undefined,
@@ -68,6 +68,8 @@ var app = {
 		this.context.closePath()
 		this.context.fill()
 	},
+
+
 
 	getNode : function(id){
 		for(var index in this.nodes){
