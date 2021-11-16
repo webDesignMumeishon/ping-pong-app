@@ -72,6 +72,10 @@
 			/*Ball bouncing logic*/
 			this.getNode('red-box').x += this.getNode('red-box').directionX;
 			this.getNode('red-box').y += this.getNode('red-box').directionY;
+			
+			let player = this.getNode('red-box').x < this.canvas.width / 2 
+			? collision(this.getNode('red-box'), this.getNode('player-one'))
+			: collision(this.getNode('red-box'), this.getNode('player-two'))
 
 			if(this.getNode('red-box').y + this.getNode('red-box').height > this.canvas.height || this.getNode('red-box').y < 0){
 				this.getNode('red-box').directionY = -this.getNode('red-box').directionY;
