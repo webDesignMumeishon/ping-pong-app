@@ -40,13 +40,25 @@ var app = {
 		for(var index in this.nodes){
 			var node = this.nodes[index];
 
-			this.context.fillStyle = node.color;
-			this.context.fillRect(node.x, node.y, node.width, node.height);
+			if(node.text >= 0){
+				this.drawText(node)
+			}
+			else{
+				this.context.fillStyle = node.color;
+				this.context.fillRect(node.x, node.y, node.width, node.height);
+			}
 		}
 
 		this.lastUpdate = Date.now();
 		this.timestamp+=dt;
 	},
+
+	drawText: function(node){
+		this.context.fillStyle = node.color;
+		this.context.fillText(node.text, node.x, node.y)
+		this.context.font = "75px Arial"
+	},
+
 	getNode : function(id){
 		for(var index in this.nodes){
 			var node = this.nodes[index];

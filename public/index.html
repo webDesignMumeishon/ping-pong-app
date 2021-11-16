@@ -48,6 +48,24 @@
 				color  : 'blue',
 				score: 0
 			});
+
+			this.nodes.push({
+				id : 'player-two-score',
+				x  : 550,
+				y  : 100,
+				color  : 'blue',
+				text: 0
+			});
+
+			this.nodes.push({
+				id : 'player-one-score',
+				x  : 200,
+				y  : 100,
+				color  : 'black',
+				text: 0
+			});
+
+
 			document.addEventListener('keydown', playersMoves)
 		};
 		
@@ -105,7 +123,7 @@
 				let player = this.getNode('player-two')
 				// Update score player two and reset game
 				player.score += 1
-				console.log("PLAYER TWO WON | SCORE: ", player.score);
+				this.getNode("player-two-score").text = player.score
 				startBallPosition()
 			}
 			else if(ball.x + ball.width > this.canvas.width){
@@ -113,7 +131,7 @@
 				let player = this.getNode('player-one')
 				// Update score player one and reset game
 				player.score += 1
-				console.log("PLAYER ONE WON | SCORE: ", player.score);
+				this.getNode("player-one-score").text = player.score
 				startBallPosition()
 			}
 
