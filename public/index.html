@@ -142,6 +142,7 @@
 
 		};
 
+		// pause function. Freeze the game, it is needed the id returned by the requestAnimationFrame to cancel it and pause
 		app.pause = function(){
 			if(this.id){
 				cancelAnimationFrame(this.id)
@@ -152,6 +153,7 @@
 			}
 		};
 
+		// reset function, starts from zero
 		app.reset = function(){
 			this.nodes = []
 			this.onInit()
