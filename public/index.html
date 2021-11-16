@@ -74,18 +74,17 @@
 			this.getNode('red-box').x += this.getNode('red-box').directionX;
 			this.getNode('red-box').y += this.getNode('red-box').directionY;
 			
+			/*Detect collision between player and ball*/
 			let player = this.getNode('red-box').x < this.canvas.width / 2 
 			? collision(this.getNode('red-box'), this.getNode('player-one'))
 			: collision(this.getNode('red-box'), this.getNode('player-two'))
 
+			/*Re-directing after hitting a bounce*/
 			if(this.getNode('red-box').y + this.getNode('red-box').height > this.canvas.height || this.getNode('red-box').y < 0){
 				this.getNode('red-box').directionY = -this.getNode('red-box').directionY;
-				console.log("Changed: directionY in: ", this.getNode('red-box').y);
 			}
-
 			if(this.getNode('red-box').x + this.getNode('red-box').width > this.canvas.width || this.getNode('red-box').x < 0){
 				this.getNode('red-box').directionX = -this.getNode('red-box').directionX;
-				console.log("Changed: directionY in: ", this.getNode('red-box').y);
 			}
 		};
 	</script>
