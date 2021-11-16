@@ -14,6 +14,9 @@
 
 		/*Values*/
 		const paddleInitialPosition = this.canvas.height/2 - 150/2
+		/*Bindings*/
+		startBallPosition = startBallPosition.bind(app) 
+		playersMoves = playersMoves.bind(app)
 		
 		app.onInit = function(){
 			
@@ -45,7 +48,6 @@
 				score: 0
 			});
 			
-			playersMoves = playersMoves.bind(this)
 			document.addEventListener('keydown', playersMoves)
 		};
 		
