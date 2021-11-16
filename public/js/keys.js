@@ -22,6 +22,10 @@ let playersMoves = function(e){
     else if(e.keycode === 32 || e.which == 32){
         this.pause()
     }
+    else if(e.keycode === 82 || e.which == 82){
+        this.reset()
+    }
+    
 }
 
 

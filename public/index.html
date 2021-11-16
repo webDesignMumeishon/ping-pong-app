@@ -41,7 +41,7 @@
 			
 			this.nodes.push({
 				id : 'player-two',
-				x  : 800 - 50,
+				x  : app.width - 50,
 				y  : paddleInitialPosition,
 				width  : 50,
 				height : 150,
@@ -130,6 +130,7 @@
 		};
 
 		app.reset = function(){
+			this.nodes = []
 			this.onInit()
 		}
 
