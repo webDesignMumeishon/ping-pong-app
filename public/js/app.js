@@ -4,7 +4,7 @@ var app = {
 	context : null,
 
 	//resizing
-	width   : 800,
+	width   : 1300,
 	height  : 400,
 
 	//id for stopping the animation
@@ -43,12 +43,14 @@ var app = {
 			if(node.text >= 0){
 				this.drawText(node)
 			}
+			else if(node.id === "red-box"){
+				this.drawCircle(node)
+			}
 			else{
 				this.context.fillStyle = node.color;
 				this.context.fillRect(node.x, node.y, node.width, node.height);
 			}
 		}
-
 		this.lastUpdate = Date.now();
 		this.timestamp+=dt;
 	},
@@ -57,6 +59,14 @@ var app = {
 		this.context.fillStyle = node.color;
 		this.context.fillText(node.text, node.x, node.y)
 		this.context.font = "75px Arial"
+	},
+
+	drawCircle: function(node){
+		this.context.fillStyle = node.color;
+		this.context.beginPath()
+		this.context.arc(node.x, node.y,node.r, 0, Math.PI*2, false)
+		this.context.closePath()
+		this.context.fill()
 	},
 
 	getNode : function(id){

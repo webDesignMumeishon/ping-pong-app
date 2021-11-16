@@ -4,7 +4,7 @@
 	<title>Ping Pong Game</title>
 </head>
 <body>
-	<canvas id="canvas" width="800" height="400" style="border: solid black;"></canvas>
+	<canvas id="canvas" width="1300" height="400" style="border: solid black;"></canvas>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/keys.js"></script>
 	<script type="text/javascript" src="js/collision.js"></script>
@@ -17,7 +17,6 @@
 		/*Bindings*/
 		startBallPosition = startBallPosition.bind(app) 
 		playersMoves = playersMoves.bind(app)
-		
 
 		app.onInit = function(){
 			
@@ -26,6 +25,7 @@
 				width  : 50,
 				height : 50,
 				color  : 'red',
+				r: 20,
 			});
 			startBallPosition()
 			
@@ -51,20 +51,19 @@
 
 			this.nodes.push({
 				id : 'player-two-score',
-				x  : 550,
-				y  : 100,
+				x  : 3 * app.width / 4,
+				y  : app.height / 5,
 				color  : 'blue',
 				text: 0
 			});
 
 			this.nodes.push({
 				id : 'player-one-score',
-				x  : 200,
-				y  : 100,
+				x  : app.width / 4,
+				y  : app.height / 5,
 				color  : 'black',
 				text: 0
 			});
-
 
 			document.addEventListener('keydown', playersMoves)
 		};
@@ -108,12 +107,12 @@
 
 				let direction = (ball.x < this.canvas.width / 2 ) ? 1 : -1
 
-				ball.directionX = direction * 10 * Math.cos(angle)
-				ball.directionY = direction * 10 * Math.sin(angle)
+				ball.directionX = direction * 20 * Math.cos(angle)
+				ball.directionY = direction * 20 * Math.sin(angle)
 			}
 
-			/*Re-directing after hitting a upper-bounce*/
-			if(ball.y + ball.height > this.canvas.height || ball.y < 0){
+			/*Re-directing after hitting a upper-bounce or lower-bounce*/
+			if(ball.y + ball.r > this.canvas.height || ball.y < 0){
 				ball.directionY = -ball.directionY;
 			}
 
@@ -126,7 +125,7 @@
 				this.getNode("player-two-score").text = player.score
 				startBallPosition()
 			}
-			else if(ball.x + ball.width > this.canvas.width){
+			else if(ball.x + ball.r > this.canvas.width){
 				// Get current player
 				let player = this.getNode('player-one')
 				// Update score player one and reset game
