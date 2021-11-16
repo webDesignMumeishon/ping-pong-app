@@ -1,4 +1,4 @@
-const speedOfPaddle = 10
+const speedOfPaddle = 50
 
 let playersMoves = function(e){
     // W

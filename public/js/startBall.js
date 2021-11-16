@@ -1,15 +1,11 @@
 
-function startBallPositionAxisX(){
-    let max = 650
-    let min = 50
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+function startBallPositionAxisX(width){
+    return width/2;
 }
 
-// function startBallPositionAxisY(){
-//     let max = 650
-//     let min = 50
-//     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-// }
+function startBallPositionAxisY(height){
+    return height/2 - 100/2;
+}
 
 function startBallDirection(){
     if(Math.random() < 0.5){

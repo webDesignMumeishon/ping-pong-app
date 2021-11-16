@@ -13,20 +13,26 @@
 
 		app.onInit = function(){
 
+			/*Values*/
+			const canvasTotalWidth = this.canvas.width
+			const canvasTotalHeight = this.canvas.height
+			const paddleInitialPosition = this.canvas.height/2 - 150/2
+
 			this.nodes.push({
 				id : 'red-box',
-				x  : startBallPositionAxisX(),
-				y  : 50,
+				x  : startBallPositionAxisX(canvasTotalWidth),
+				y  : startBallPositionAxisY(canvasTotalHeight),
 				width  : 100,
 				height : 100,
 				color  : 'red',
-				direction : startBallDirection()
+				directionX : 3,
+				directionY : -3
 			});
 
 			this.nodes.push({
 				id : 'player-one',
 				x  : 0,
-				y  : 0,
+				y  : paddleInitialPosition,
 				width  : 50,
 				height : 150,
 				color  : 'black'
@@ -34,8 +40,8 @@
 
 			this.nodes.push({
 				id : 'player-two',
-				x  : 750,
-				y  : 0,
+				x  : canvasTotalWidth - 50,
+				y  : paddleInitialPosition,
 				width  : 50,
 				height : 150,
 				color  : 'blue'
@@ -64,23 +70,18 @@
 			}
 
 			/*Ball bouncing logic*/
+			this.getNode('red-box').x += this.getNode('red-box').directionX;
+			this.getNode('red-box').y += this.getNode('red-box').directionY;
 
-			if(Math.cos(this.timestamp / 100) > 0){
-				if(this.getNode('red-box').x > 600){
-					this.getNode('red-box').direction = -5;
-				}
-
-			}else{
-				if(this.getNode('red-box').x < 600){
-					this.getNode('red-box').direction = 5;
-					// console.log("rigth", this.getNode('red-box').x);
-				}
+			if(this.getNode('red-box').y + this.getNode('red-box').height > this.canvas.height || this.getNode('red-box').y < 0){
+				this.getNode('red-box').directionY = -this.getNode('red-box').directionY;
+				console.log("Changed: directionY in: ", this.getNode('red-box').y);
 			}
 
-			this.getNode('red-box').x += this.getNode('red-box').direction;
-			// this.getNode('red-box').y += this.getNode('red-box').direction;
-
-			// console.log("Running");
+			if(this.getNode('red-box').x + this.getNode('red-box').width > this.canvas.width || this.getNode('red-box').x < 0){
+				this.getNode('red-box').directionX = -this.getNode('red-box').directionX;
+				console.log("Changed: directionY in: ", this.getNode('red-box').y);
+			}
 		};
 	</script>
 </body>
