@@ -6,6 +6,8 @@ In the game you will see two paddles, one for each player. Black paddle is playe
 Players have to move the paddle and hit the ball the deter it touching the line behind where the paddle is.
 In each side of the players, you will see the accumulated points of them.
 
+The ball is thrown into the game at a random speed. Each time is reseted the ball is thrown again.
+
 After each collision, the speed of the ball is incremented
 
 ## Keys commands
