@@ -19,5 +19,5 @@ Pause the game: space
 Reset the game: R
 
 
-## Video
+## Video Link
 https://drive.google.com/file/d/1s55IB2DenfONZOUGuhDfsmuD-WzLAgkU/view?usp=sharing
