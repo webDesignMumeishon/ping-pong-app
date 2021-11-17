@@ -17,7 +17,7 @@
 		const paddleInitialPosition = app.height/2 - 150/2
 		/*Bindings*/
 		startBallPosition = startBallPosition.bind(app) 
-		playersMoves = playersMoves.bind(app)
+		playersKeyCommands = playersKeyCommands.bind(app)
 		resize = resize.bind(app)
 
 		app.onInit = function(){
@@ -71,7 +71,7 @@
 				text: 0
 			});
 			
-			document.addEventListener('keydown', playersMoves)
+			document.addEventListener('keydown', playersKeyCommands)
 			window.addEventListener('resize', resize)
 		};
 		
@@ -147,7 +147,6 @@
 
 		// pause function. Freeze the game, it is needed the id returned by the requestAnimationFrame to cancel it and pause
 		app.pause = function(){
-			console.log(this.idStop);
 			if(this.idStop){
 				cancelAnimationFrame(this.idStop)
 				this.idStop = undefined
@@ -157,7 +156,7 @@
 			}
 		};
 
-		// reset function, starts from zero
+		// reset function, starts from zero the players scores
 		app.reset = function(){
 			this.nodes = []
 			this.onInit()

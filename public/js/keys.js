@@ -1,7 +1,7 @@
 const speedOfPaddle = 50
 
 
-let playersMoves = function(e){
+let playersKeyCommands = function(e){
     // W
     if(e.keycode === 87 || e.which == 87){
         this.getNode('player-one').y += -speedOfPaddle
