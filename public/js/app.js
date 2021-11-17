@@ -8,7 +8,7 @@ var app = {
 	height  : 500,
 
 	//id for stopping the animation
-	idStop : undefined,
+	idStop : null,
 
 	//nodes
 	nodes   : [],
