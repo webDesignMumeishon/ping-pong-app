@@ -1,4 +1,4 @@
-function collision(b, p){
+export function collision(b, p){
 
     p.top = p.y
     p.bottom = p.y + p.height

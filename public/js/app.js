@@ -1,3 +1,11 @@
+import { startBallPosition } from "./start.js";
+import { collision } from "./collision.js";
+import { resize } from "./resize.js";
+import { playersKeyCommands } from "./keys.js";
+import { beepSound } from "./beep.js";
+import { updatePlayerAndScore } from "./updateScore.js";
+
+
 var app = {
 	//initial variables
 	canvas  : null,
@@ -96,3 +104,13 @@ var app = {
 window.onload = function(){
 	app.init();
 };
+
+export {
+	app,
+	startBallPosition,
+	collision, 
+	resize, 
+	playersKeyCommands,
+	beepSound,
+	updatePlayerAndScore
+}

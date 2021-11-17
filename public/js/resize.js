@@ -1,12 +1,13 @@
 const playerPaddleWidth = 50
+import {app} from './app.js'
 
-function resize(e){
+export function resize(e){
     //setting up variables
-    let playerTwoPosition = this.getNode("player-two")
+    let playerTwoPosition = app.getNode("player-two")
     let canvas = document.getElementById('canvas')
     //scores variables
-    let playerOneScorePosition = this.getNode("player-one-score")
-    let playerTwoScorePosition = this.getNode("player-two-score")
+    let playerOneScorePosition = app.getNode("player-one-score")
+    let playerTwoScorePosition = app.getNode("player-two-score")
 
     let heigth = window.innerHeight;
     let width = window.innerWidth;
@@ -16,18 +17,18 @@ function resize(e){
     canvas.heigth = heigth
 
     // update width and height app
-    this.width = width
-    this.heigth = heigth
+    app.width = width
+    app.heigth = heigth
 
     // update width of player-two
-	playerTwoPosition.x = this.width - playerPaddleWidth
+	playerTwoPosition.x = app.width - playerPaddleWidth
 
     // update score of player-one
-    playerOneScorePosition.x = this.width / 4
-    playerOneScorePosition.y = this.height / 5
+    playerOneScorePosition.x = app.width / 4
+    playerOneScorePosition.y = app.height / 5
 
     // update score of player-two
-    playerTwoScorePosition.x = 3 * this.width / 4
+    playerTwoScorePosition.x = 3 * app.width / 4
     playerTwoScorePosition.y = app.height / 5
 
 }

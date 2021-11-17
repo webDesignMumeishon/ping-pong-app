@@ -3,12 +3,12 @@ const max = 20;
 const initialBallSpeedNum = 15;
 
 
-function startBallPosition(){
+export function startBallPosition(app){
 
-    const ball = this.getNode("red-box")
+    const ball = app.getNode("red-box")
 
-    ball.x = this.width / 2
-    ball.y = this.height / 2 - 100 / 2
+    ball.x = app.width / 2
+    ball.y = app.height / 2 - 100 / 2
 
     let randomNumber = Math.random() * (max - min) + min;
 
