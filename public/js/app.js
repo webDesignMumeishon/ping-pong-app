@@ -28,7 +28,7 @@ var app = {
 	render : function(){
 		this.clear();
 		this.update();
-		this.id = window.requestAnimationFrame(this.render.bind(this));
+		this.idStop = window.requestAnimationFrame(this.render.bind(this));
 	},
 	clear  : function(){
 		this.context.clearRect(0, 0, this.width, this.height);
