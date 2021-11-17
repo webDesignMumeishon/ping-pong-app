@@ -4,162 +4,43 @@
 	<title>Ping Pong Game</title>
 </head>
 <body>
-	<canvas id="canvas" width="1300" height="500" style="border: solid black;width: 100%;"></canvas>
+	<canvas id="canvas" width="800" height="400"></canvas>
 	<script type="text/javascript" src="js/app.js"></script>
-	<script type="text/javascript" src="js/keys.js"></script>
-	<script type="text/javascript" src="js/collision.js"></script>
-	<script type="text/javascript" src="js/start.js"></script>
-	<script type="text/javascript" src="js/resize.js"></script>
 	<script type="text/javascript">
 		//Sample functions, remove these functions and design ping-pong game with onInit and onUpdate.
 
-		/*Values*/
-		const paddleInitialPosition = app.height/2 - 150/2
-		/*Bindings*/
-		startBallPosition = startBallPosition.bind(app) 
-		playersMoves = playersMoves.bind(app)
-		resize = resize.bind(app)
-
 		app.onInit = function(){
-
-			const playerPaddleHeight = 150
-			const playerPaddleWidth = 50
-
 			this.nodes.push({
 				id : 'red-box',
-				width  : 50,
-				height : 50,
+				x  : 100,
+				y  : 0,
+				width  : 100,
+				height : 100,
 				color  : 'red',
-				r: 20,
-			});
-			startBallPosition()
-			
-			this.nodes.push({
-				id : 'player-one',
-				x  : 0,
-				y  : paddleInitialPosition,
-				width  : playerPaddleWidth,
-				height : playerPaddleHeight,
-				color  : 'black',
-				score: 0
-			});
-			
-			this.nodes.push({
-				id : 'player-two',
-				x  : app.width - playerPaddleWidth,
-				y  : paddleInitialPosition,
-				width  : playerPaddleWidth,
-				height : playerPaddleHeight,
-				color  : 'blue',
-				score: 0
+				direction : 0
 			});
 
 			this.nodes.push({
-				id : 'player-two-score',
-				x  : 3 * app.width / 4,
-				y  : app.height / 5,
-				color  : 'blue',
-				text: 0
+				id : 'black-box',
+				x  : 50,
+				y  : 0,
+				width  : 150,
+				height : 150,
+				color  : 'black'
 			});
-
-			this.nodes.push({
-				id : 'player-one-score',
-				x  : app.width / 4,
-				y  : app.height / 5,
-				color  : 'black',
-				text: 0
-			});
-			
-			document.addEventListener('keydown', playersMoves)
-			window.addEventListener('resize', resize)
 		};
-		
+
 		app.onUpdate = function(time){
-			/*setting up variables*/
-			let playerOne = this.getNode("player-one")
-			let playerTwo = this.getNode("player-two")
-			let ball = this.getNode('red-box')
+			this.getNode('black-box').y++;
 
-
-			if(playerOne.y < 0){
-				playerOne.y = 0
+			if(Math.cos(this.timestamp / 100) > 0){
+				this.getNode('red-box').direction = -1;
+			}else{
+				this.getNode('red-box').direction = 1;
 			}
 
-			if(playerOne.y >= this.height - playerOne.height){
-				playerOne.y = this.height - playerOne.height
-			}
-
-			if(playerTwo.y < 0){
-				playerTwo.y = 0
-			}
-
-			if(playerTwo.y >= this.height - playerTwo.height){
-				playerTwo.y = this.height - playerTwo.height
-			}
-
-			/*Ball bouncing logic*/
-			ball.x += ball.directionX;
-			ball.y += ball.directionY;
-			
-			/*Detect collision between player and ball*/
-			let player = ball.x < this.width / 2 
-			? playerOne
-			: playerTwo
-
-			/*We change the direction based on where the ball hit the paddle*/
-			if(collision(ball, player)){
-				let collidePoint = (ball.y - (player.y + player.height / 2)) / (player.height/2)
-				let angle = collidePoint * (Math.PI / 4)
-
-				let direction = (ball.x < this.width / 2 ) ? 1 : -1
-
-				ball.directionX = direction * 20 * Math.cos(angle)
-				ball.directionY = direction * 20 * Math.sin(angle)
-			}
-
-			/*Re-directing after hitting a upper-bounce or lower-bounce*/
-			if(ball.y + ball.r > this.height || ball.y < 0){
-				ball.directionY = -ball.directionY;
-			}
-
-			/*Re-directing after hitting a side-bounce*/
-			if(ball.x < 0){
-				// Get current player
-				let player = this.getNode('player-two')
-				// Update score player two and reset game
-				player.score += 1
-				this.getNode("player-two-score").text = player.score
-				startBallPosition()
-			}
-			else if(ball.x + ball.r > this.width){
-				// Get current player
-				let player = this.getNode('player-one')
-				// Update score player one and reset game
-				player.score += 1
-				this.getNode("player-one-score").text = player.score
-				startBallPosition()
-			}
-
+			this.getNode('red-box').x+=this.getNode('red-box').direction;
 		};
-
-		// pause function. Freeze the game, it is needed the id returned by the requestAnimationFrame to cancel it and pause
-		app.pause = function(){
-			if(this.id){
-				cancelAnimationFrame(this.id)
-				this.id = undefined
-			}
-			else{
-				window.requestAnimationFrame(this.render.bind(this))
-			}
-		};
-
-		// reset function, starts from zero
-		app.reset = function(){
-			this.nodes = []
-			this.onInit()
-		}
-
-
 	</script>
 </body>
 </html>

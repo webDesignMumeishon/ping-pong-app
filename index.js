@@ -5,7 +5,7 @@ const port    = 3000;
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-	res.send('Welcome to the test!')
+	res.send('Welcome!')
 });
 
 app.listen(port, () => {
