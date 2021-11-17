@@ -27,17 +27,22 @@
 		app.onInit = function(){
 
 			//VARIABLES
-			const PLAYER_PADDLE_HEIGHT = 150
-			const PLAYER_PADDLE_WIDTH = 50
-			const PADDLE_INITIAL_POSITION = app.height/2 - 150/2
+			const PLAYER_PADDLE_HEIGHT = 150;
+			const PLAYER_PADDLE_WIDTH = 50;
+			const PADDLE_INITIAL_POSITION = app.height/2 - 150/2;
+			const BALL_WIDTH = 50;
+			const BALL_HEIGHT = 50;
+			const BALL_RADIUS = 20;
+
+
 
 			this.nodes.push({
 				id : 'red-box',
-				width  : 50,
-				height : 50,
+				width  : BALL_WIDTH,
+				height : BALL_HEIGHT,
 				color  : 'red',
 				// speed: 10,
-				r: 20,
+				r: BALL_RADIUS,
 			});
 			startBallPosition()
 			
@@ -89,20 +94,28 @@
 			let playerTwo = this.getNode("player-two")
 			let ball = this.getNode('red-box')
 
+			//player one overlaping controlls
+			const didPlayerOneReachTopMostLine = playerOne.y < 0;
+			const didPlayerOneReachBottomMostLine = playerOne.y >= this.height - playerOne.height;
 
-			if(playerOne.y < 0){
+			//player two overlaping controlls
+			const didPlayerTwoReachTopMostLine = playerTwo.y < 0;
+			const didPlayerTwoReachBottomMostLine = playerTwo.y >= this.height - playerTwo.height;
+
+			/*this is to deter the players paddle overlaping*/
+			if(didPlayerOneReachTopMostLine){
 				playerOne.y = 0
 			}
 
-			if(playerOne.y >= this.height - playerOne.height){
+			if(didPlayerOneReachBottomMostLine){
 				playerOne.y = this.height - playerOne.height
 			}
 
-			if(playerTwo.y < 0){
+			if(didPlayerTwoReachTopMostLine){
 				playerTwo.y = 0
 			}
 
-			if(playerTwo.y >= this.height - playerTwo.height){
+			if(didPlayerTwoReachBottomMostLine){
 				playerTwo.y = this.height - playerTwo.height
 			}
 
