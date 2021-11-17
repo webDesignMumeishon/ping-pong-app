@@ -111,10 +111,9 @@
 			ball.x += ball.directionX;
 			ball.y += ball.directionY;
 			
-			/*Detect collision between player and ball*/
-			let player = ball.x < this.width / 2 
-			? playerOne
-			: playerTwo
+			/*Detect in what side the ball is*/
+			let isBallInPlayerOneField = ball.x < this.width / 2 
+			let player = isBallInPlayerOneField ? playerOne : playerTwo
 
 			/*We change the direction based on where the ball hit the paddle*/
 			if(collision(ball, player)){
@@ -129,14 +128,18 @@
 				ball.speed += 1
 			}
 
-			/*Re-directing after hitting a upper-bounce or lower-bounce*/
-			if(ball.y + ball.r > this.height || ball.y < 0){
+			let didBallHitBounce = ball.y + ball.r > this.height || ball.y < 0
+			/*Re-directing after hitting either upper-bounce or lower-bounce*/
+			if(didBallHitBounce){
 				ball.directionY = -ball.directionY;
 			}
 
-			/*Re-directing after hitting a side-bounce*/
+			/*Reseting after hitting a player side*/
+			let didBallHitPlayerOneSide = ball.x < 0
+			let didBallHitPlayerTwoSide = ball.x + ball.r > this.width
 
-			if(ball.x < 0){
+			//if the ball hit the player-one side, player-two score increments
+			if(didBallHitPlayerOneSide){
 				// Get current player & player score
 				let player = this.getNode('player-two')
 				let playerScore = this.getNode("player-two-score") 
@@ -147,7 +150,9 @@
 				startBallPosition()
 				beepSound();
 			}
-			else if(ball.x + ball.r > this.width){
+
+			//if the ball hit the player-two side, player-one score increments
+			else if(didBallHitPlayerTwoSide){
 				// Get current player
 				let player = this.getNode('player-one')
 				let playerScore = this.getNode("player-one-score") 
