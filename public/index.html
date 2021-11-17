@@ -147,9 +147,9 @@
 
 		// pause function. Freeze the game, it is needed the id returned by the requestAnimationFrame to cancel it and pause
 		app.pause = function(){
-			if(this.id){
-				cancelAnimationFrame(this.id)
-				this.id = undefined
+			if(this.idStop){
+				cancelAnimationFrame(this.idStop)
+				this.idStop = undefined
 			}
 			else{
 				window.requestAnimationFrame(this.render.bind(this))
