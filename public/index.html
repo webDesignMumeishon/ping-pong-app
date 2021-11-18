@@ -120,6 +120,7 @@
 			let didBallHitPlayerTwoSide = ball.x + ball.r > this.width
 			
 			if(didBallHitPlayerOneSide){
+				let playerScore = this.getNode("player-two-score") 
 				updatePlayerAndScore(playerTwo, playerScore)
 				startBallPosition(this)
 				beepSound();
