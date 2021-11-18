@@ -75,7 +75,6 @@
 
 			const didPlayerOneReachTopMostLine = playerOne.y < 0;
 			const didPlayerOneReachBottomMostLine = playerOne.y >= this.height - playerOne.height;
-
 			const didPlayerTwoReachTopMostLine = playerTwo.y < 0;
 			const didPlayerTwoReachBottomMostLine = playerTwo.y >= this.height - playerTwo.height;
 
@@ -113,14 +112,14 @@
 				ball.speed += 1
 			}
 
-			let didBallHitBounce = ball.y + ball.r > this.height || ball.y < 0
+			let didBallHitBounce = ball.y + ball.r >= this.height || ball.y - ball.r <= 0
 			if(didBallHitBounce){
 				ball.directionY = -ball.directionY;
 			}
 
 			let didBallHitPlayerOneSide = ball.x < 0
 			let didBallHitPlayerTwoSide = ball.x + ball.r > this.width
-
+			console.log(ball.x, 0);
 			if(didBallHitPlayerOneSide){
 				let playerScore = this.getNode("player-two-score") 
 
