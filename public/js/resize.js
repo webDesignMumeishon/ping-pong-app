@@ -1,12 +1,9 @@
 const playerPaddleWidth = 50
 import {app} from './app.js'
-
 const MARGIN_BOTTOM_HEIGHT = 5
-
 export function resize(e){
     let playerTwoPosition = app.getNode("player-two")
     let canvas = document.getElementById('canvas')
-
     let playerOneScorePosition = app.getNode("player-one-score")
     let playerTwoScorePosition = app.getNode("player-two-score")
 
