@@ -116,13 +116,10 @@
 			if(didBallHitBounce){
 				ball.directionY = -ball.directionY;
 			}
-
-			let didBallHitPlayerOneSide = ball.x < 0
+			let didBallHitPlayerOneSide = ball.x - ball.r < 0
 			let didBallHitPlayerTwoSide = ball.x + ball.r > this.width
-			console.log(ball.x, 0);
+			
 			if(didBallHitPlayerOneSide){
-				let playerScore = this.getNode("player-two-score") 
-
 				updatePlayerAndScore(playerTwo, playerScore)
 				startBallPosition(this)
 				beepSound();
@@ -130,7 +127,6 @@
 
 			else if(didBallHitPlayerTwoSide){
 				let playerScore = this.getNode("player-one-score") 
-				
 				updatePlayerAndScore(playerOne, playerScore)
 				startBallPosition(this)
 				beepSound();
