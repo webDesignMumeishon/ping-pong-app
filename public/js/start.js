@@ -1,20 +1,23 @@
-const min = 5;
-const max = 20;
-const initialBallSpeedNum = 15;
+const MIN_STARTING_POINT = -10;
+const MAX_STARTING_POINT = 10;
+const INIT_BALL_SPEED = 15;
+const INCREMENT_RANGE = 5
 
 
 export function startBallPosition(app){
-
     const ball = app.getNode("red-box")
-
     ball.x = app.width / 2
     ball.y = app.height / 2 - 100 / 2
 
-    let randomNumber = Math.random() * (max - min) + min;
+    let ballInitialDirectionX = Math.random() * (MAX_STARTING_POINT - MIN_STARTING_POINT) + MIN_STARTING_POINT 
+    let ballInitialDirectionY = Math.random() * (MAX_STARTING_POINT - MIN_STARTING_POINT) + MIN_STARTING_POINT 
 
-    ball.speed = initialBallSpeedNum
-    ball.directionX = randomNumber;
-    ball.directionY = -ball.directionX;
+    let checkIfBallInitialDirectionIsOutOfRange = ballInitialDirectionX > -2 && ballInitialDirectionX < 2
 
+    ball.speed = INIT_BALL_SPEED
+    ball.directionX = checkIfBallInitialDirectionIsOutOfRange ? ballInitialDirectionX + INCREMENT_RANGE : ballInitialDirectionX;
+    ball.directionY = ballInitialDirectionY
+
+    console.log(ball.directionX, ball.directionY);
 }
 
