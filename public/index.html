@@ -21,6 +21,7 @@
 			const BALL_RADIUS = 20;
 
 			resize()
+			this.nodes = []
 
 			this.nodes.push({
 				id : 'red-box',
@@ -147,12 +148,13 @@
 				this.idStop = null
 			}
 			else{
-				window.requestAnimationFrame(this.render.bind(this))
+				this.idStop = window.requestAnimationFrame(this.render.bind(this))
 			}
 		};
 
 		app.reset = function(){
-			this.nodes = []
+			cancelAnimationFrame(this.idStop)
+			window.requestAnimationFrame(this.render.bind(this))
 			this.onInit()
 		}
 
