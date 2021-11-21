@@ -48,9 +48,7 @@ var app = {
 		for(var index in this.nodes){
 			var node = this.nodes[index];
 
-			//the node with the text property is the text in the board
 			let isScoreNode = node.hasOwnProperty("text")
-			//if the node has r, it means that is the ball
 			let isBall = node.hasOwnProperty("r")
 
 			if(isScoreNode){
@@ -59,7 +57,6 @@ var app = {
 			else if(isBall){
 				this.drawCircle(node)
 			}
-			//if it is not a ball neither a score, it is a paddle
 			else{
 				this.context.fillStyle = node.color;
 				this.context.fillRect(node.x, node.y, node.width, node.height);

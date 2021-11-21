@@ -2,9 +2,10 @@
 <html>
 <head>
 	<title>Ping Pong Game</title>
+	<link rel="stylesheet" href="./style.css">
 </head>
 <body>
-	<canvas id="canvas" width="1300" height="500" style="border: solid black;width: 100%;"></canvas>
+	<canvas id="canvas"></canvas>
 	<script type="module" src="js/app.js"></script>
 
 	<script type="module">
@@ -12,7 +13,6 @@
 		
 		//Sample functions, remove these functions and design ping-pong game with onInit and onUpdate.
 		app.onInit = function(){
-			//VARIABLES
 			const PLAYER_PADDLE_HEIGHT = 150;
 			const PLAYER_PADDLE_WIDTH = 50;
 			const PADDLE_INITIAL_POSITION = app.height/2 - 150/2;
@@ -20,12 +20,14 @@
 			const BALL_HEIGHT = 50;
 			const BALL_RADIUS = 20;
 
+			resize()
+			this.nodes = []
+
 			this.nodes.push({
 				id : 'red-box',
 				width  : BALL_WIDTH,
 				height : BALL_HEIGHT,
 				color  : 'red',
-				// speed: 10,
 				r: BALL_RADIUS,
 			});
 			startBallPosition(this)
@@ -66,27 +68,20 @@
 				text: 0
 			});
 			
-			//event listener to detect the pressed keys from the client
 			document.addEventListener('keydown', playersKeyCommands)
-			//event listener to detect the resize of the window
 			window.addEventListener('resize', resize)
 		};
 		
 		app.onUpdate = function(time){
-			/*setting up variables*/
 			let playerOne = this.getNode("player-one")
 			let playerTwo = this.getNode("player-two")
 			let ball = this.getNode('red-box')
 
-			//player one overlaping controlls
 			const didPlayerOneReachTopMostLine = playerOne.y < 0;
 			const didPlayerOneReachBottomMostLine = playerOne.y >= this.height - playerOne.height;
-
-			//player two overlaping controlls
 			const didPlayerTwoReachTopMostLine = playerTwo.y < 0;
 			const didPlayerTwoReachBottomMostLine = playerTwo.y >= this.height - playerTwo.height;
 
-			/*this is to deter the players paddle overlaping*/
 			if(didPlayerOneReachTopMostLine){
 				playerOne.y = 0
 			}
@@ -103,57 +98,40 @@
 				playerTwo.y = this.height - playerTwo.height
 			}
 
-			/*Ball bouncing logic*/
 			ball.x += ball.directionX;
 			ball.y += ball.directionY;
 			
-			/*Detect in what side the ball is*/
 			let isBallInPlayerOneField = ball.x < this.width / 2 
 			let player = isBallInPlayerOneField ? playerOne : playerTwo
 
-			/*We change the direction based on where the ball hit the paddle*/
 			if(collision(ball, player)){
 				let collidePoint = (ball.y - (player.y + player.height / 2)) / (player.height/2)
 				let angle = collidePoint * (Math.PI / 4)
 
-				//if direction is 1 is going from left to right
-				//if direction is 1 is going from rigth to left
 				let direction = (ball.x < this.width / 2 ) ? 1 : -1
 
 				ball.directionX = direction * ball.speed * Math.cos(angle)
 				ball.directionY = direction * ball.speed * Math.sin(angle)
 
-				//increment the speed of the ball
 				ball.speed += 1
 			}
 
-			let didBallHitBounce = ball.y + ball.r > this.height || ball.y < 0
-			/*Re-directing after hitting either upper-bounce or lower-bounce*/
+			let didBallHitBounce = ball.y + ball.r >= this.height || ball.y - ball.r <= 0
 			if(didBallHitBounce){
 				ball.directionY = -ball.directionY;
 			}
-
-			/*Reseting after hitting a player side*/
-			let didBallHitPlayerOneSide = ball.x < 0
+			let didBallHitPlayerOneSide = ball.x - ball.r < 0
 			let didBallHitPlayerTwoSide = ball.x + ball.r > this.width
-
-			//if the ball hit the player-one side, player-two score increments
+			
 			if(didBallHitPlayerOneSide){
-				// Get current player score
 				let playerScore = this.getNode("player-two-score") 
-
-				// Update score player two and reset game
 				updatePlayerAndScore(playerTwo, playerScore)
 				startBallPosition(this)
 				beepSound();
 			}
 
-			//if the ball hit the player-two side, player-one score increments
 			else if(didBallHitPlayerTwoSide){
-				// Get current player score
 				let playerScore = this.getNode("player-one-score") 
-				
-				// Update score player one and reset game
 				updatePlayerAndScore(playerOne, playerScore)
 				startBallPosition(this)
 				beepSound();
@@ -161,26 +139,22 @@
 
 		};
 
-		// pause function. Freeze the game, it is needed the id returned by the requestAnimationFrame to cancel it and pause
 		app.pause = function(){
 
 			let isAnimationRunning = this.idStop
 
 			if(isAnimationRunning){
-				//the animation frame is cancelled by passing the idStop retrived from requestAnimationFrame in app.js
 				cancelAnimationFrame(this.idStop)
-				//if this.idStop is null, the game is paused
 				this.idStop = null
 			}
 			else{
-				//if there is no id, a new requestAnimationFrame is created
-				window.requestAnimationFrame(this.render.bind(this))
+				this.idStop = window.requestAnimationFrame(this.render.bind(this))
 			}
 		};
 
-		// reset function, starts from zero the players scores
 		app.reset = function(){
-			this.nodes = []
+			cancelAnimationFrame(this.idStop)
+			window.requestAnimationFrame(this.render.bind(this))
 			this.onInit()
 		}
 
